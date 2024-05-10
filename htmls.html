@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Include any necessary CSS libraries or styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="greeting"></div>
+    <div id="chart"></div>
+    <div id="tabs">
+        <button id="topLinksTab" onclick="showTab('topLinks')">Top links</button>
+        <button id="recentLinksTab" onclick="showTab('recentLinks')">Recent links</button>
+    </div>
+    <div id="linksList"></div>
+
+    <script>
+        // Function to fetch data from the API
+        function fetchData() {
+            fetch('https://api.inopenapp.com/api/v1/dashboardNew', {
+                headers: {
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjU5MjcsImlhdCI6MTY3NDU1MDQ1MH0.dCkW0ox8tbjJA2GgUx2UEwNlbTZ7Rr38PVFJevYcXF'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Populate greeting
+                document.getElementById('greeting').innerText = `Greetings from ${data.localTime}`;
+                
+                // Populate chart (assuming chartData is an array of numbers)
+                const chartData = data.chartData;
+                const chartDiv = document.getElementById('chart');
+                chartData.forEach(value => {
+                    const bar = document.createElement('div');
+                    bar.style.height = `${value * 10}px`;
+                    bar.classList.add('bar');
+                    chartDiv.appendChild(bar);
+                });
+
+                // Populate links list based on the default tab
+                populateLinks(data.topLinks);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // Function to switch tabs and populate links accordingly
+        function showTab(tabName) {
+            if (tabName === 'topLinks') {
+                document.getElementById('topLinksTab').classList.add('active');
+                document.getElementById('recentLinksTab').classList.remove('active');
+                populateLinks(data.topLinks);
+            } else {
+                document.getElementById('topLinksTab').classList.remove('active');
+                document.getElementById('recentLinksTab').classList.add('active');
+                populateLinks(data.recentLinks);
+            }
+        }
+
+        // Function to populate links list
+        function populateLinks(links) {
+            const linksList = document.getElementById('linksList');
+            linksList.innerHTML = ''; // Clear previous content
+            links.forEach(link => {
+                const listItem = document.createElement('li');
+                listItem.textContent = link;
+                linksList.appendChild(listItem);
+            });
+        }
+
+        // Initial call to fetch data when the page loads
+        window.onload = fetchData;
+    </script>
+</body>
+</html>
