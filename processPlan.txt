@@ -1,0 +1,9 @@
+Upon receiving the project, my initial steps involved reviewing the API and its responses. Subsequently, I examined Figma for any customized designs or icons, which I then incorporated into the project. Additionally, I created an extension for the font utilized in Figma to ensure consistency across the application.
+
+Proceeding with the development process, I began by implementing basic UI elements such as buttons, lists, and text components. Following this, I focused on making these elements functional by handling user interactions, such as clicks and state changes. As the project progressed, I organized the codebase by segregating views and logic for better maintainability.
+
+A significant aspect of the development involved crafting a custom bottom app bar using SwiftUI, which necessitated creating black-colored icons by duplicating Figma designs and adjusting opacity to achieve the desired appearance. Additionally, I integrated a simple chart with static data, mirroring the design from Figma.
+
+The next phase entailed writing API methods and establishing the data and domain layers, including use cases. Connecting the retrieved data from the API to the presentation layer followed suit. I opted for separate API calls for lists and cards to accommodate potential future changes where different URLs might be required for data retrieval.
+
+Ensuring compatibility across various screen sizes was a crucial step, warranting thorough testing. Furthermore, I implemented a feature to notify users of network unavailability by displaying a prompt when no internet connection is detected.
